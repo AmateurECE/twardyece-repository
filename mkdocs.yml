@@ -1,5 +1,13 @@
-site_name: My Docs
-site_url: https://example.com/
+site_name: Repository
+site_url: https://twardyece.com/repository/
+site_dir: repository
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
 markdown_extensions:
   - pymdownx.highlight
   - pymdownx.superfences
