@@ -1,2 +1,8 @@
 site_name: My Docs
 site_url: https://example.com/
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: 'sources'
+      check_paths: true

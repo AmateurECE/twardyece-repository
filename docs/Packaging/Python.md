@@ -12,7 +12,9 @@ generating a setup script, like in other packaging environments. The
 `setup.py` must therefore be written by hand. The following provides a
 good start:
 
-\inputminted{python}{sources-Python/setup.py}
+``` python
+--8<-- "Packaging/Python/setup.py"
+```
 
 ### Package Names with Hyphens
 If your package name contains a hypen, as in `django-index`, the hyphen
@@ -64,12 +66,16 @@ rsync -e 'ssh -p 5000' -rv --delete dist django_bookmarks.egg-info \
 The last thing that's required is an `index.html`. This file contains
 links to all of the files in the distribution. Below is an example of one:
 
-\inputminted{html}{sources-Python/index.html}
+``` html
+--8<-- "Packaging/Python/index.html"
+```
 
 The following shell script can be used to generate the `index.html`
 automatically:
 
-\inputminted{sh}{sources-Python/generateIndex.sh}
+``` sh
+--8<-- "Packaging/Python/generateIndex.sh"
+```
 
 And lastly, update this file to the repository:
 
