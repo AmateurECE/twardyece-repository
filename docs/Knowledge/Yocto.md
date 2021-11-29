@@ -50,4 +50,21 @@ Otherwise, the following will generally work:
 devtool sdk-install <packageName>
 ```
 
-# Types of Packages in the Ecosystem
+# Static Library Packages
+
+# Host Tools
+
+Creating a package that generates a host tool is exceedingly easy--just add the
+following to the recipe:
+
+```
+BBCLASSEXTEND = "native nativesdk"
+```
+
+Adding these lines creates two new recipes in the layer, in addition to
+`<pkgname>`--`<pkgname>-native` and `nativesdk-<pkgname>`. To depend on this
+devtool, just add `<pkgname>-native` to your `DEPENDS:append` specification in
+your reliant recipe.
+
+Theoretically, the `nativesdk-<pkgname>` recipe is installable via an
+Extensible SDK, but I haven't figured that out yet.
