@@ -1,6 +1,8 @@
-# RNDIS Setup
+# Working with U-boot
 
-## Device Side
+## RNDIS Setup
+
+### Device Side
 
 > TODO: Add CONFIG_'s to set for RNDIS
 
@@ -37,7 +39,7 @@ host 192.168.5.1 is alive
 => # Command finishes, so the RNDIS link goes down again.
 ```
 
-## Host Side
+### Host Side
 
 Setup on the host side, of course, depends on whether we're on Windows or
 Linux, and what distribution.
@@ -65,9 +67,9 @@ the RNDIS link is *down*. This command will assign the IP address provided to
 the interface, and must be set as the value of `${serverip}` in U-boot in order
 for TFTP, etc. to work.
 
-# TFTP
+## TFTP
 
-## Device Side
+### Device Side
 
 > TODO: Obtain configuration necessary to compile TFTP support into U-boot
 
@@ -85,7 +87,7 @@ side, e.g. `ping ${serverip}` works, TFTP configuration is simple:
 Usage of the `tftp` command changes between major releases of U-boot, so
 ensure to check `help tftp`.
 
-## Host Side
+### Host Side
 
 I find it easy to spin up an OCI container to serve files over TFTP. The
 following docker-compose.yaml file will work to serve the contents of the
