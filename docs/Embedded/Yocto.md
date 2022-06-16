@@ -1,3 +1,8 @@
+---
+title: Yocto
+summary: Tips for Linux Development with Yocto
+date: 2022-06-16
+---
 # Generating the SDK Image
 
 For a regular SDK image
