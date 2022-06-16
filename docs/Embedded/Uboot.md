@@ -4,7 +4,7 @@
 
 ### Device Side
 
-> TODO: Add CONFIG_'s to set for RNDIS
+!!! todo "Add CONFIG_'s to set for RNDIS"
 
 RNDIS on U-boot depends on built-in configuration to be present. Of course,
 RNDIS is a USB protocol for setting up layer-2 (data link layer) networks in
@@ -71,7 +71,7 @@ for TFTP, etc. to work.
 
 ### Device Side
 
-> TODO: Obtain configuration necessary to compile TFTP support into U-boot
+!!! todo "Obtain configuration necessary to compile TFTP support into U-boot"
 
 If the network configuration is setup correctly on both the host and device
 side, e.g. `ping ${serverip}` works, TFTP configuration is simple:
