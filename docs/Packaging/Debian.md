@@ -155,3 +155,21 @@ some packaging bugs once for all packages. This tool provides such scripts as
 other files in `debian/`, for example, `package.docs`, `packages.manpages`,
 `package.install`, etc. There are some third-party helpers for sets of
 packages, such as `python-support`, `dh_ocaml`, etc.
+
+# Gotchas
+
+## Single Binary Packages
+
+When source packages are configured to produce a single binary package (that
+is, there's only one `Package` stanza in `debian/control`), the following error
+might occur:
+
+```
+dh_install: warning: Cannot find (any matches for) "usr/bin/volumetric" (tried
+in ., debian/tmp)
+
+dh_install: warning: volumetric missing files: usr/bin/volumetric
+```
+
+See the following [Stack Overflow answer](https://unix.stackexchange.com/a/551942/347919) for more information, but the solution is to provide an empty
+override for dh_install in `debian/rules`.
