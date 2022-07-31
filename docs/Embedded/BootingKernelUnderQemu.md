@@ -18,17 +18,57 @@ terse, even after specifying `console=ttySX` on the kernel command line, it may
 be necessary to increase `CONFIG_CONSOLE_LOGLEVEL_DEFAULT` in the kernel
 configuration to obtain more information from the kernel at boot time.
 
-## Standard Options
+## Running the Virtual Machine
 
-## Running on the Local Machine (Without VGA Display)
+### Standard Options
+
+```shell-session
+$ qemu-system-x86_64 \
+    --enable-kvm \
+    -cpu host \
+    -m 512M \
+    -smp cpus=2 \
+    ...
+```
+
+#. `--enable-kvm`: Run the virtual machine using KVM.
+#. `-cpu host`: Virtualize the host cpu for the guest.
+#. `-m 512M`: Provide 512M of memory to the guest.
+#. `-smp cpus=2`: Expose two CPU cores to the guest.
+
+### Boot Media
+
+The options below can be used in any sensible combination (as long as SeaBIOS
+will be able to locate a bootable kernel, and the kernel can locate an init).
+
+```shell-session
+$ qemu-system-x86_64 \
+    -kernel bzImage \
+    -initrd initrd.cpio.gz \
+    -drive format=raw,media=cdrom,file=archlinux.iso \
+    -drive format=raw,media=disk,file=installed-image.img \
+    ...
+```
+
+#. `-kernel bzImage`: Boot the kernel contained in the file `./bzImage`. This
+   option can be used to boot compressed or uncompressed kernel images.
+#. `-initrd initrd.cpio.gz`: Copy the file `./initrd.cpio.gz` to RAM, and boot
+   the kernel with this as its initial ramdisk.
+#. `-drive format=raw,media=cdrom,file=archlinux.iso`: Connect a CDROM slot to
+   the guest, and use the file `./archlinux.iso` as the image on the CDROM.
+#. `-drive format=raw,media=disk,file=installed-image.img`: Connect a SCSI disk
+   to the guest, and use the file `./installed-image.img` as the backend.
+   Presumably, this file would be a disk image that contains a full filesystem.
+
+### Running on the Local Machine (Without VGA Display)
 
 The following command will create the virtual machine under KVM, booting a
 bzImage and utilizing a cpio archive as an initial ramdisk. Additionally, the
 virtual VGA card is not utilized, and output devices are redirected to a local
 Unix socket.
 
-```
-qemu-system-x86_64 \
+```shell-session
+$ qemu-system-x86_64 \
     --enable-kvm \
     -cpu host \
     -m 512M \
@@ -63,7 +103,49 @@ The options to redirect display devices are described below:
    this is done using the `SERIAL_CONSOLES` variable in your machine
    configuration.
 
-## Connecting minicom to the Unix socket
+### Running on a Remote Machine (Without VGA Display)
+
+```shell-session
+$ qemu-system-x86_64 \
+    -monitor stdio \
+    -chardev socket,id=serial0,host=0.0.0.0,port=3080,server=on \
+    -serial chardev:serial0 \
+    -nographic \
+    -vga none \
+    -device isa-applesmc,osk="$OSK" \
+    -kernel bzImage \
+    -initrd qemu-debug-minimal-qemu-x86_64.cpio.gz \
+    -append console=ttyS0,115200
+```
+
+These options are mostly the same as in the previous section, so only the
+differences are displayed:
+
+#. `-chardev socket,id=serial0,host=0.0.0.0,port=3080,server=on`: Connect the
+   console `/dev/ttyS0` to a TCP socket on the host, which is listening for
+   connections on IPv4 address 0.0.0.0 and port 3080.
+
+## Client Connections
+
+### Proxying the TCP Connection to a Unix Socket
+
+This can be done using `socat(1)`:
+
+```shell-session
+$ socat tcp:192.168.1.60:3080 unix-l:${CONSOLE_SOCK}
+```
+
+This will connect a TCP socket with an endpoint to IPv4 address 192.168.1.60
+and port 3080 to a Unix socket with the path `${CONSOLE_SOCK}`. As soon as
+the connection is made, QEMU will start the guest, so it's advised to have
+already started `minicom(1)` on the Unix socket. The connection topography that
+this creates is:
+
+```
+QEMU <-> TCP Socket <-> socat(1) <-> Unix Socket <-> minicom(1)
+```
+
+### Connecting minicom to the Unix socket
 
 Install the `minirc-qemu` package from [my pacman repository][1]. This file
 should contain the following:
