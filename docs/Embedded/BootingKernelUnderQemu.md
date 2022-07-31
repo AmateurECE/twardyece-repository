@@ -31,10 +31,10 @@ $ qemu-system-x86_64 \
     ...
 ```
 
-#. `--enable-kvm`: Run the virtual machine using KVM.
-#. `-cpu host`: Virtualize the host cpu for the guest.
-#. `-m 512M`: Provide 512M of memory to the guest.
-#. `-smp cpus=2`: Expose two CPU cores to the guest.
+1. `--enable-kvm`: Run the virtual machine using KVM.
+2. `-cpu host`: Virtualize the host cpu for the guest.
+3. `-m 512M`: Provide 512M of memory to the guest.
+4. `-smp cpus=2`: Expose two CPU cores to the guest.
 
 ### Boot Media
 
@@ -50,13 +50,13 @@ $ qemu-system-x86_64 \
     ...
 ```
 
-#. `-kernel bzImage`: Boot the kernel contained in the file `./bzImage`. This
+1. `-kernel bzImage`: Boot the kernel contained in the file `./bzImage`. This
    option can be used to boot compressed or uncompressed kernel images.
-#. `-initrd initrd.cpio.gz`: Copy the file `./initrd.cpio.gz` to RAM, and boot
+2. `-initrd initrd.cpio.gz`: Copy the file `./initrd.cpio.gz` to RAM, and boot
    the kernel with this as its initial ramdisk.
-#. `-drive format=raw,media=cdrom,file=archlinux.iso`: Connect a CDROM slot to
+3. `-drive format=raw,media=cdrom,file=archlinux.iso`: Connect a CDROM slot to
    the guest, and use the file `./archlinux.iso` as the image on the CDROM.
-#. `-drive format=raw,media=disk,file=installed-image.img`: Connect a SCSI disk
+4. `-drive format=raw,media=disk,file=installed-image.img`: Connect a SCSI disk
    to the guest, and use the file `./installed-image.img` as the backend.
    Presumably, this file would be a disk image that contains a full filesystem.
 
@@ -85,18 +85,18 @@ $ qemu-system-x86_64 \
 
 The options to redirect display devices are described below:
 
-#. `-monitor stdio`: Connect the QEMU monitor to stdin and stdout.
-#. `-chardev socket,id=serial0,path=${CONSOLE_SOCKET},server=on`:
+1. `-monitor stdio`: Connect the QEMU monitor to stdin and stdout.
+2. `-chardev socket,id=serial0,path=${CONSOLE_SOCKET},server=on`:
    Create a character device on the VM that is connected to a UNIX socket at
    the path `${XDG_RUNTIME_DIR}/kvm-console.sock`. This will be a server
    socket, and QEMU will block until a connection on this socket is made. I
    usually have `CONSOLE_SOCKET=${XDG_RUNTIME_DIR}/kvm-console.sock`.
-#. `-serial chardev:serial0`: Create a serial device (which will be enumerated
+3. `-serial chardev:serial0`: Create a serial device (which will be enumerated
    under Linux as `/dev/ttyS0` and connect it to the chardev with id `serial0`,
    created above.)
-#. `-nographic`: Do not connect a VGA device to the quest.
-#. `-vga none`: Don't connect a virtual VGA card to the guest.
-#. `-append 'console=ttyS0,115200n8`: Append these arguments to the kernel
+4. `-nographic`: Do not connect a VGA device to the quest.
+5. `-vga none`: Don't connect a virtual VGA card to the guest.
+6. `-append 'console=ttyS0,115200n8`: Append these arguments to the kernel
    command line. This will, of course, put kmsg output on `/dev/ttyS0`. In
    order to actually get a terminal on this serial port, the rootfs will need
    to be configured to start a `getty` instance on this serial port. In Yocto,
@@ -121,7 +121,7 @@ $ qemu-system-x86_64 \
 These options are mostly the same as in the previous section, so only the
 differences are displayed:
 
-#. `-chardev socket,id=serial0,host=0.0.0.0,port=3080,server=on`: Connect the
+1. `-chardev socket,id=serial0,host=0.0.0.0,port=3080,server=on`: Connect the
    console `/dev/ttyS0` to a TCP socket on the host, which is listening for
    connections on IPv4 address 0.0.0.0 and port 3080.
 
