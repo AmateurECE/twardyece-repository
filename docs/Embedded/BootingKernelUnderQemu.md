@@ -29,7 +29,7 @@ qemu-system-x86_64 \
     -m 512M \
     -smp cpus=2 \
     -monitor stdio \
-    -chardev socket,id=serial0,path=${SOCKET_DIR}/kvm-console.sock,server=on \
+    -chardev socket,id=serial0,path=${XDG_RUNTIME_DIR}/kvm-console.sock,server=on \
     -serial chardev:serial0 \
     -nographic \
     -kernel bzImage \
@@ -40,11 +40,10 @@ qemu-system-x86_64 \
 ### Redirecting Output Devices
 
 1. `-monitor stdio`: Connect the QEMU monitor to stdin and stdout.
-2. `-chardev socket,id=serial0,path=${SOCKET_DIR}/kvm-console.sock,server=on`:
+2. `-chardev socket,id=serial0,path=${XDG_RUNTIME_DIR}/kvm-console.sock,server=on`:
    Create a character device on the VM that is connected to a UNIX socket at the path
-   `${SOCKET_DIR}/kvm-console.sock`. This will be a server socket, and QEMU will block
-   until a connection on this socket is made. I usually have
-   `SOCKET_DIR=/run/user/1000`.
+   `${XDG_RUNTIME_DIR}/kvm-console.sock`. This will be a server socket, and QEMU will
+   block until a connection on this socket is made.
 3. `-serial chardev:serial0`: Create a serial device (which will be enumerated under
    Linux as `/dev/ttyS0` and connect it to the chardev with id `serial0`, created
    above.)
