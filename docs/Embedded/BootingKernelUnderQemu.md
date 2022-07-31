@@ -11,6 +11,13 @@ requires the `atkbd` driver, which either needs to be built as a module (and loa
 by udev), or built into the kernel. The option `CONFIG_KEYBOARD_ATKBD` configures this
 driver.
 
+### Debug Output on Console
+
+Seems silly to call out, but if the debug output on the console is verbose, even
+after specifying `console=ttySX` on the kernel command line, it may be necessary to
+increase `CONFIG_CONSOLE_LOGLEVEL_DEFAULT` in the kernel configuration to obtain more
+information from the kernel at boot time.
+
 ## Starting the Virtual Machine
 
 ### Standard Invocation
