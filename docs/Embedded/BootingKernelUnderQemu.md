@@ -13,7 +13,7 @@ driver.
 
 ### Debug Output on Console
 
-Seems silly to call out, but if the debug output on the console is verbose, even
+Seems silly to call out, but if the debug output on the console is rather terse, even
 after specifying `console=ttySX` on the kernel command line, it may be necessary to
 increase `CONFIG_CONSOLE_LOGLEVEL_DEFAULT` in the kernel configuration to obtain more
 information from the kernel at boot time.
