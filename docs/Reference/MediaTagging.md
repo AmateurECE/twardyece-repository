@@ -39,3 +39,13 @@ available as part of the `flac` package on Arch Linux.
 ## Adding Track Total
 
 For FLAC files, the track total tag is `TOTALTRACKS`.
+
+## Importing Artwork
+
+The following command will copy image data into a metadata frame in a flac
+file. As always with cover art embedded in metadata flags, it's a good idea to
+ensure the artwork is adequately compressed first.
+
+```bash-session
+$ metaflac --import-picture-from=<path> "$f"
+```
