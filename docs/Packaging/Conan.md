@@ -1,4 +1,4 @@
-# Introduction
+# Conan
 
 This document goes over creating, uploading, and using C++ packages with the
 Conan Package Manager. The examples in this document will make use of Xiph's
