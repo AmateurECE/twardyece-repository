@@ -34,3 +34,14 @@ Replace `refs/heads/` with `refs/remotes/` to see remote branches.
 ```bash-session
 $ git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 ```
+
+# Advanced Stash Operations
+
+Show the contents of the stash using `git stash show [-p]`. There are also aliases
+for the stash refs in the local checkout, which allows use of `git-diff` to inspect
+the stash:
+
+```
+# View changes to `a.file` in the topmost stash entry
+git diff stash@{0}^1 stash@{0} -- a.file
+```
