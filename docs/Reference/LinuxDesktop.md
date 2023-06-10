@@ -28,18 +28,18 @@ kernel-build$ sudo make -C /usr/src/linux LLVM=1 O=$PWD install
 kernel-build$ sudo make -C /usr/src/linux LLVM=1 O=$PWD modules_install
 ```
 
+And extract the M1 firmware for m1n1:
+
+```bash-session
+kernel-build$ sudo asahi-fwupdate
+```
+
 Now presumably, we also have to update m1n1 and the stage-two payload. But,
 since we're on Gentoo and building the kernel out-of-tree, we have to
 tell the `update-m1n1` script where to find our device tree blobs:
 
 ```bash-session
 kernel-build$ sudo DTBS=arch/arm64/boot/dts/apple/*.dtb update-m1n1
-```
-
-And extract the M1 firmware for m1n1:
-
-```bash-session
-kernel-build$ sudo asahi-fwextract
 ```
 
 Generate a new initramfs for our fresh kernel:
