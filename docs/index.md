@@ -1,17 +1,11 @@
-# Welcome to MkDocs
+# Software Rolodex
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+This repository stores information that I've found useful in a few different
+situations. This includes things like:
 
-## Commands
+1. Instructions for doing complicated stuff that I have to do often
+2. Instructions for doing stuff that I don't have to do very often
+3. Instructions for doing stuff that took me a long time to figure out, that I might
+  one day have to do again.
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+If it helps you, as well, then welcome! That would be by coincidence.
