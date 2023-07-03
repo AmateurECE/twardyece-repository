@@ -1,4 +1,6 @@
-# Applying Patches to Packages
+# Gentoo
+
+## Applying Patches to Packages
 
 Very often, while working on a package, I want to test my changes before
 committing. Naturally, Portage has a workflow for this, which is documented
