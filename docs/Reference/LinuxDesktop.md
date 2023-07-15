@@ -20,10 +20,16 @@ kernel-build$ cat ../PKGBUILDs/linux-asahi/config ../PKGBUILDs/linux-asahi/confi
 kernel-build$ make -C /usr/src/linux LLVM=1 olddefconfig prepare O=$PWD
 ```
 
-Build and install the kernel and modules:
+Build the kernel and modules:
 
 ```bash-session
 kernel-build$ make -C /usr/src/linux LLVM=1 O=$PWD -j$(nproc)
+```
+
+Before installing, it may be necessary to remove old kernels from `/boot` and their modules in `/lib/modules`.
+Next, install the kernel and modules:
+
+```bash-session
 kernel-build$ sudo make -C /usr/src/linux LLVM=1 O=$PWD install
 kernel-build$ sudo make -C /usr/src/linux LLVM=1 O=$PWD modules_install
 ```
