@@ -191,3 +191,36 @@ the `admin` user:
 ldappasswd  -W -D 'cn=admin,dc=edtwardy,dc=hopto,dc=org' -S \
   'uid=edtwardy,ou=people,dc=edtwardy,dc=hopto,dc=org'
 ```
+
+# Configuration of the server
+
+The `slapd` server is configured using the same mechanisms that are used
+to manipulate the directory. Every configuration option is an object in the
+schema. However, configuring the `slapd` service does require a few different
+options than are used in normal operation. Additionally, these operations
+will likely need to be performed as root.
+
+See `slapd-config(5)` for more information. Configuration is organized
+hierarchically, under the root DN `cn=config`. To read all of the
+configuration:
+
+```
+sudo ldapsearch -H ldapi:/// -Y EXTERNAL -LLL -b cn=config
+```
+
+We can filter this just like normal, for example, to get the server log level:
+
+```
+sudo ldapsearch -H ldapi:/// -Y EXTERNAL -LLL -b cn=config \
+    (objectClass=olcGlobal) olcLogLevel
+```
+
+We can change this using `ldapmodify`:
+
+```
+cat -<<EOF | sudo ldapmodify -H ldapi:/// -Y EXTERNAL
+dn: cn=config
+changetype: modify
+replace: olcLogLevel
+olcLogLevel: stats
+```
