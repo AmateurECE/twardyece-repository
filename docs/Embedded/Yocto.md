@@ -90,8 +90,11 @@ which compilers to query when a non-clang compiler is encountered in the
 
 ```
 export CLANGD_FLAGS="--query-driver=$(dirname $(which $CC))/*"
+
+# Now generate the compiler database using your build system, e.g. for ninja:
+ninja -C oe-workdir/recipe-1+git9999 -t compdb
 ```
 
-From within a devshell, this should expand to a glob expression that clangd
-will match compilers against. Clangd will automatically get the system include
-flags from the matching compiler.
+From within a devshell, the CLANGD_FLAGS environment variable should expand to
+a glob expression that clangd will match compilers against. Clangd will
+automatically get the system include flags from the matching compiler.
