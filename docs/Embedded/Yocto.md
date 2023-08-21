@@ -73,3 +73,25 @@ your reliant recipe.
 
 Theoretically, the `nativesdk-<pkgname>` recipe is installable via an
 Extensible SDK, but I haven't figured that out yet.
+
+# devshell Tricks
+
+## Faux Scrolling
+
+The terminal emulator used with the devshell is Tmux. To enable faux scrolling
+in Tmux, press Ctrl-b + : to enter a command, and run the command
+`setw mouse on`.
+
+## Clangd
+
+If compiling using a GCC compiler, we should only need to tell clangd about
+which compilers to query when a non-clang compiler is encountered in the
+`command` field of an entry in `compiler_commands.json`:
+
+```
+export CLANGD_FLAGS="--query-driver=$(dirname $(which $CC))/*"
+```
+
+From within a devshell, this should expand to a glob expression that clangd
+will match compilers against. Clangd will automatically get the system include
+flags from the matching compiler.
