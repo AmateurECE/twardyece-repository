@@ -67,3 +67,10 @@ Some flags to `git-send-email` which may be important to remember:
 * `--to-cmd`: Provide a command to obtain the addresses that should fill the `To:`
   field of the email. This is super useful for the kernel submission workflow. An
   example: `--to-cmd="scripts/get_maintainer.pl my.patch"`
+
+# Tags
+
+Sometimes, git doesn't fetch tags when `git pull` is run. Ensure that you're
+fetching the correct remote by running `git fetch <remote>`. This helps in
+multi-remote scenarios, such as Linux kernel development. If this still
+doesn't work, try `git fetch --tags <remote>`.
