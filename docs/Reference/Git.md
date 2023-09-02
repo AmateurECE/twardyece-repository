@@ -37,14 +37,24 @@ $ git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:ye
 
 # Advanced Stash Operations
 
-Show the contents of the stash using `git stash show [-p]`. There are also aliases
-for the stash refs in the local checkout, which allows use of `git-diff` to inspect
-the stash:
+Show the contents of the stash using `git stash show [-p]`. There are also
+aliases for the stash refs in the local checkout, which allows use of
+`git-diff` to inspect the stash:
 
 ```
 # View changes to `a.file` in the topmost stash entry
 git diff stash@{0}^1 stash@{0} -- a.file
 ```
+
+Running `git stash show` without `-p` will show the diff in "short form"--that
+is, only the paths of the files that have changed, and not the content.
+Finally, running `git stash list` will show the entries in the stash.
+
+Sometimes, popping an entry from the stash will result in merge conflicts. To
+recover from this, one easy way is to run `git reset --merge`. NOTE, however,
+that this will return the index and the working tree to a completely clean
+state--any staged or unstaged changes that were present before running
+`git stash pop` will be lost.
 
 # Preparing patches to submit to a mailing list
 
