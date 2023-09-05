@@ -4,13 +4,22 @@ After `sys-kernel/asahi-sources::asahi` has been updated, it's necessary to
 patch the kernel sources to make rust available:
 
 ```bash-session
-/usr/src/linux$ sudo patch -p1 < ~/Git/linux/outgoing/v3-0001-scripts-rust_is_available-Fix-clang-version-check.patch 
+$ (cd /usr/src/linux && sudo patch -p1 < ~/Git/linux/outgoing/v3-0001-scripts-rust_is_available-Fix-clang-version-check.patch)
 ```
 
 Just as a sanity check, verify that rust is available:
 
 ```bash-session
 kernel-build$ make -C /usr/src/linux LLVM=1 O=$PWD rustavailable
+```
+
+If this fails because the version of rustc is too old, it may be because the
+rustup-installed binaries are not first in `$PATH`. I made this change
+recently after running into issues building Portage packages with
+rustup-installed versions of rustc (etc.). To resolve:
+
+```bash-session
+$ export PATH="$HOME/.cargo/bin:$PATH"
 ```
 
 Generate the kernel configuration. This procedure was taken from the [linux-asahi PKGBUILD][1].
