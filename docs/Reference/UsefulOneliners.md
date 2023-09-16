@@ -8,4 +8,7 @@ sed '/^$/N;/^\n$/D' inputFile
 
 # Enable the double-glob operator in Bash, a.k.a the "globstar" or "**":
 shopt -s globstar
+
+# Multiline search and replace in mutliple files using Perl.
+perl -i -pe 'BEGIN{undef $/;} s@mutiline\nregex@@' ./**/*/*.cpp
 ```
