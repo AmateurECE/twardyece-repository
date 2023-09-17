@@ -35,6 +35,57 @@ Replace `refs/heads/` with `refs/remotes/` to see remote branches.
 $ git for-each-ref --sort=committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
 ```
 
+# Move Some Files to Another Repo, Preserving History
+
+```bash-session
+# Clone the repository we're moving files from:
+git clone https://github.com/AmateurECE/myproject.git
+
+# Remove the remote, to prevent accidentally pushing these changes:
+cd myproject && git remote rm origin
+
+# Use git filter-repo to rewrite git history, keeping only the commits
+# that touch the desired files. Note that renames are NOT followed,
+# so if we want to keep commits that were made on files before any
+# renames occurred, we need to specify the old paths as well
+# (e.g. --path olddir --path newdir). We can use git filter-repo --analyze
+# and then observing .git/filter-repo/analysis/renames.txt to determine if
+# we need to do this.
+#
+# Additionally, we will likely need to use --force because we removed the
+# origin remote, which makes this look like a clone with history.
+#
+# If the files are not organized in the way that is required for the
+# destination repository, we can use --path-rename here to rewrite these
+# commits as if they were always at the right location.
+git filter-repo --force --path olddir --path newdir --path CMakeLists.txt \
+    --path-rename CMakeLists.txt:fsadaptor/CMakeLists.txt
+
+# Remove a bunch of history and data from dead commits:
+git reset --hard
+git gc --aggressive
+git prune
+git clean -fd
+
+# Now working in the destination repository.
+cd ~/newproject
+
+# Add the myproject checkout as a remote
+git remote add myproject ~/myproject
+
+# Merge the commits from myproject/remote-branch into the current branch of
+# newproject. Note that this will not perform a fast-forward on the current
+# branch. It will create a merge commit that merges all commits from myproject
+# into the current branch. This is extremely useful because it prevents
+# creating broken commits on the current branch if some of the intermediate
+# commits in myproject would introduce build problems in the current branch.
+# Observe this using git log --graph after the merge!
+git merge myproject remote-branch --allow-unrelated-histories
+
+# Remove the remote
+git remote rm myproject
+```
+
 # Advanced Stash Operations
 
 Show the contents of the stash using `git stash show [-p]`. There are also
