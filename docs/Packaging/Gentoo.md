@@ -13,4 +13,21 @@ checkout$ git format-patch -p HEAD^
 checkout$ sudo emerge -av ${CATEGORY}/${PN}
 ```
 
+Note that this does work when building ebuilds manually from the command-line!
+For example, in the case of developing a new ebuild for a package.
+
+## Testing an ebuild on the command line
+
+This can be done using `ebuild(1)`:
+
+```bash-session
+sudo ebuild ./package-version.ebuild manifest clean install
+```
+
+The arguments are a number of targets to run, but these three are pretty
+standard--regenerate a `Manifest` file from the ebuild to contain metadata
+for Portage, clean the build directory, and test all the build steps up
+through installation to a package sysroot (N.B., not installation _of_ the
+package).
+
 [1]: https://wiki.gentoo.org/wiki//etc/portage/patches
