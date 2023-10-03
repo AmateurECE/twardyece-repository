@@ -192,6 +192,16 @@ ldappasswd  -W -D 'cn=admin,dc=edtwardy,dc=hopto,dc=org' -S \
   'uid=edtwardy,ou=people,dc=edtwardy,dc=hopto,dc=org'
 ```
 
+# Testing User Bind
+
+The `ldapwhoami` command can be used to test whether a bind can be performed
+with a set of credentials. This is helpful, e.g. to test whether a user is
+entering the correct password:
+
+```
+ldapwhoami -x -vvv -D cn=admin,dc=edtwardy,dc=hopto,dc=org' -W
+```
+
 # Configuration of the server
 
 The `slapd` server is configured using the same mechanisms that are used
