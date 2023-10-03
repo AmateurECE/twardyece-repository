@@ -86,7 +86,7 @@ git merge myproject remote-branch --allow-unrelated-histories
 git remote rm myproject
 ```
 
-# Advanced Stash Operations
+# Stash Operations
 
 Show the contents of the stash using `git stash show [-p]`. There are also
 aliases for the stash refs in the local checkout, which allows use of
@@ -106,6 +106,10 @@ recover from this, one easy way is to run `git reset --merge`. NOTE, however,
 that this will return the index and the working tree to a completely clean
 state--any staged or unstaged changes that were present before running
 `git stash pop` will be lost.
+
+As a general rule, use `git stash push` instead of `git stash save`. The
+`push` subcommand can take arguments similar to `git diff`, which allows to
+push, for example, only some files.
 
 # Preparing patches to submit to a mailing list
 
