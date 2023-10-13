@@ -5,7 +5,11 @@ title: Packaging on Arch Linux
 # Building Packages
 
 ```
+# Build a package
 makepkg -sicf
+
+# List files installed by a *.pkg.tar.zst archive
+pacman -Qlp ./my-package.pkg.tar.zst
 ```
 
 # Packaging in a Container
