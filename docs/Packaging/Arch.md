@@ -20,10 +20,14 @@ the `base-devel` package.
 
 ```
 host$ sudo chown -R 100999:100999 .
-host$ podman run -it -v $PWD:/home/user docker.io/archlinux/archlinux:latest
-container# useradd -u 1000 -U user
-container# pacman -Sy base-devel
+host$ podman run --rm -it -v $PWD:/home/user docker.io/archlinux/archlinux:latest
+container# pacman -Sy base-devel git
+container# useradd -u 1000 -U -G wheel user
+container# passwd user
 container# su user
+container$ cd
+# ...Do work...
+host$ sudo chown -R $(id -u):$(id -u) .
 ```
 
 This creates a user with UID 1000 (inside the container). Outside of the
