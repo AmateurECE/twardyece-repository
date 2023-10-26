@@ -28,7 +28,10 @@ appends the tracktotal--it's assumed the track total is present in the shell
 variable `$total`:
 
 ```bash-session
-$ num=$(id3v2 -l "$f" | awk '/TRCK/{print $NF}'); id3v2 -T "$num/$total" "$f"
+for f in *.mp3; do
+    num=$(id3v2 -l "$f" | awk '/TRCK/{print $NF}')
+    id3v2 -T "$num/$total" "$f"
+done
 ```
 
 # FLAC
@@ -38,7 +41,11 @@ available as part of the `flac` package on Arch Linux.
 
 ## Adding Track Total
 
-For FLAC files, the track total tag is `TOTALTRACKS`.
+For FLAC files, the track total tag is `TOTALTRACKS`:
+
+```bash-session
+$ metaflac --set-tag=TOTALTRACKS=12 "$f"
+```
 
 ## Importing Artwork
 
