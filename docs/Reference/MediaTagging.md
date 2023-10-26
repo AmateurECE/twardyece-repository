@@ -34,6 +34,15 @@ for f in *.mp3; do
 done
 ```
 
+## Removing a Tag
+
+With `id3v2`, we can do this by specifying an empty value for an existing tag.
+For example, to remove the disc number tag:
+
+```bash-session
+$ id3v2 --TPOS '' "$f"
+```
+
 # FLAC
 
 Tags on FLAC files can be modified using the `metaflac` tool, which is
