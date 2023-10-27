@@ -86,6 +86,37 @@ git merge myproject remote-branch --allow-unrelated-histories
 git remote rm myproject
 ```
 
+Sometimes, while attempting the merge, `git` will report:
+
+```
+$ git merge myproject remote-branch --allow-unrelated-histories
+myproject: not something we can merge
+```
+
+This may happen, for example, if a path filter is not used, so some of the
+content appears to be identical, and the rest of the content is renamed
+(as an example).
+
+To get around this, we can create a local branch from the remote:
+
+```bash-session
+$ git fetch myproject
+$ git checkout -b merge-playground myproject/remote-branch
+$ git switch main
+$ git merge merge-playground
+```
+
+In these scenarios, we may be dealing with rename/rename conflicts. Playing
+around with different combinations of `git add` should produce the desired
+behavior.
+
+```bash-session
+$ git add new-name-1 new-name-2
+$ git rm old-name
+$ git checkout
+etc...
+```
+
 # Stash Operations
 
 Show the contents of the stash using `git stash show [-p]`. There are also
@@ -110,6 +141,13 @@ state--any staged or unstaged changes that were present before running
 As a general rule, use `git stash push` instead of `git stash save`. The
 `push` subcommand can take arguments similar to `git diff`, which allows to
 push, for example, only some files.
+
+# Deleting Remote Objects
+
+```bash-session
+# Deleting branches
+git push -u remote --delete branch-name
+```
 
 # Preparing patches to submit to a mailing list
 
