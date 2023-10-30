@@ -11,4 +11,8 @@ shopt -s globstar
 
 # Multiline search and replace in mutliple files using Perl.
 perl -i -pe 'BEGIN{undef $/;} s@mutiline\nregex@@' ./**/*/*.cpp
+
+# List contents of directories in a tree-like format (installed by the
+app-text/tree package on Gentoo)
+tree some-subdirectory
 ```

@@ -149,6 +149,31 @@ push, for example, only some files.
 git push -u remote --delete branch-name
 ```
 
+# Applying Patches
+
+For patches generated from the git repository to which they are being applied,
+the easiest mechanism is `git-am(1)`. Simply:
+
+```bash-session
+$ git am my-awesome-patch.patch
+```
+
+For more complicated use cases, `git-apply(1)` is the tool. Use this tool when
+some hunks will not apply cleanly, patches need to be applied to files in
+different directories, or the patch file does not contain a change that forms
+an entire commit. For example, the following would apply a patch written for
+`./Foo/a.cpp` to `./Bar/a.cpp`:
+
+```bash-session
+$ git apply \
+    --rej # In case some hunks don't apply
+    -v    # Be verbose, let us know if you're skipping hunks
+    --directory=Bar # change to the "Bar" directory before applying
+    -p2 # Strip not only the prefix ("a" or "b"), but also the first path
+        # element ("Foo", in this case.)
+    my-awesome-patch.patch
+```
+
 # Preparing patches to submit to a mailing list
 
 Some flags to `git-format-patch` which may be important to remember:
