@@ -65,3 +65,16 @@ ensure the artwork is adequately compressed first.
 ```bash-session
 $ metaflac --import-picture-from=<path> "$f"
 ```
+
+# MP4/M4A
+
+```
+# List metadata
+AtomicParsley file.m4a -t
+
+# Update disk
+IFS=$'\n'
+for f in *.m4a; do
+  AtomicParsley "$f" --disk "" --overWrite
+done
+```
