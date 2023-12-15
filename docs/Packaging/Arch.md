@@ -48,3 +48,14 @@ To edit files from the host, use `podman-unshare(1)`:
 ```
 host$ podman unshare nvim PKGBUILD
 ```
+
+# Downloading the Sources of a Package
+
+There is conflicting information about this on the forums. Old posts reference
+a tool that no longer exists, called `asp`. The new tool is `pkgctl`:
+
+The following downloads the PKGBUILD for the `arm-none-eabi-gcc` package:
+
+```
+$ pkgctl repo clone --protocol=https arm-none-eabi-gcc
+```
