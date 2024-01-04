@@ -12,25 +12,17 @@ correct order.
 
 # Resizing LVM2 Logical Volumes
 
-```
-/dev/sda5: cannot resize to 118977 extents as 118978 are allocated
-```
+!!! note
+    The [Arch Linux wiki page on LVM2][1] is very helpful here
 
-Have to add one for the metadata that lives in the first PE (seen by the output
-of `pvs -o +pe_start`). From the output of `pvdisplay`, we know that a PE is
-4.00 MiB, so we just add four mibibytes to the requested size.
+In this example, I'll be reducing the size of an LVM2 logical volume (LV) named
+`home` to make space for a 30 GiB `btrfs` partition. Obviously, I checked to
+make sure that the filesystem has the available space to support this
+reduction.
 
-```
-/dev/sda5: cannot resize to 118978 extents as later ones are allocated
-```
-
-Have to run pvmove to rearrange the unallocated space to the end of the volume
-group.
-
-Steps taken:
-
-Have to log in to the Debian LiveCD. The credentials are `user:live`, and no
-password is required for `sudo` access.
+I begin by booting into a Debian LiveCD, which I configure with an SSH server.
+The credentials to log in are `user:live`, and no password is required for
+`sudo` access.
 
 I currently have the following layout:
 
@@ -66,14 +58,10 @@ root@debian:/home/user# pvs
   /dev/sda5  edtwardy-vg lvm2 a--  <464.76g    0
 ```
 
-In this example, I'll be reducing the size of the `home` LV to make space for a
-40 GiB btrfs partition. Obviously, I checked to make sure that the filesystem
-has the available space to support this reduction.
-
-Use resize2fs to reduce the size of the ext4 filesystem on the `home` LV. Start
-by using `dumpe2fs` to calculate the new block size of the filesystem. This
-allows us to remove any ambiguity caused by the interpretation of units (m, M,
-g, G, etc.).
+I use resize2fs to reduce the size of the ext4 filesystem on the `home` LV.
+Start by using `dumpe2fs` to calculate the new block size of the filesystem.
+This allows us to remove any ambiguity caused by the interpretation of units
+(m, M, g, G, etc.).
 
 ```
 root@debian:/home/user# dumpe2fs -h /dev/edtwardy-vg/home
@@ -88,6 +76,7 @@ Block size:               4096
 Calculate the new size with the formula:
 
 > reduction = 30 \* 2\*\*30 (30 GiB)
+>
 > block_count - (reduction / block_size)
 
 ```
@@ -197,7 +186,7 @@ root@debian:/home/user# pvs -v --segments
   /dev/sda5  edtwardy-vg lvm2 a--  <464.76g 30.00g 114786  3489 var    16082 linear /dev/sda5:114786-118274
   /dev/sda5  edtwardy-vg lvm2 a--  <464.76g 30.00g 118275   703            0 free
 
-````
+```
 
 Let's try again:
 ```
@@ -278,7 +267,9 @@ I'm gonna use some math to determine the new end sector of the extended
 partition:
 
 > previous_end = 975171584
+>
 > sector_size = 512
+>
 > previous_end - (30 * 2**30 / sector_size)
 
 ```
@@ -382,7 +373,7 @@ Device     Boot     Start       End   Sectors   Size Id Type
 Partition table entries are not in disk order.
 ```
 
-Now, I'm going to create a new partition that will contain our btrfs
+Now, I'm going to create a new partition that will contain our `btrfs`
 filesystem.
 
 ```
@@ -511,3 +502,5 @@ partition. Use the `t` command to change the partition type to 7--`NTFS/exFAT`.
 
 Finally, use the `mkfs.ntfs` command to create an NTFS partition on the disk.
 On Arch Linux, this tool is installed via the `ntfs-3g` package.
+
+[1]: https://wiki.archlinux.org/title/LVM

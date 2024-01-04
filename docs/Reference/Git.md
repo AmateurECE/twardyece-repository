@@ -208,3 +208,46 @@ doesn't work, try `git fetch --tags <remote>`.
 ```bash-session
 $ git clone --recurse-submodules <repo>
 ```
+
+# Log Tricks
+
+```
+# View a simplified graph showing only branch and tag points:
+git log --simplify-by-decoration --graph --format="%d"
+```
+
+# Complicated Feature Branch Rebase Operations
+
+Sometimes, we base a feature branch on a feature branch, and we need to rebase
+our branch onto `main` after our predecessor is merged, or we want to rebase a
+feature branch onto `main` after a different feature was merged to maintain a
+clean history.
+
+We might guess this is the case if rebasing appears to create many merge
+conflicts, or if `git log main..HEAD` produces a lot of commits that should
+already be present in `main` (this might be the case if our predecessor feature
+branch was merged with a merge commit, instead of a squash or a fast-forward).
+
+The [git docs for rebase][1] provide a helpful example here.
+
+```
+ o---o---o---o---o  master
+         \
+          o---o---o---o---o  next
+                           \
+                            o---o---o  topic
+```
+
+In this case, `topic` is our feature, and `next` is the feature we are based
+on. In this example, `next` has just been merged to `master` (not shown).
+
+To perform this rebase, we must use the `--onto` switch:
+
+```
+git rebase --onto main next topic
+```
+
+After this rebase, don't forget to push using `--force-with-lease`, instead of
+`--force`, since the former is much safer!
+
+[1]: https://git-scm.com/docs/git-rebase

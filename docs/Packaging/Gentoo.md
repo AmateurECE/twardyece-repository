@@ -30,4 +30,7 @@ for Portage, clean the build directory, and test all the build steps up
 through installation to a package sysroot (N.B., not installation _of_ the
 package).
 
+To actually install the package, append `qmerge` to the end of the command, so
+that the package is merged after installation.
+
 [1]: https://wiki.gentoo.org/wiki//etc/portage/patches
