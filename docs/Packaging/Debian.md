@@ -1,4 +1,32 @@
 # Debian
+## Unable To Update Package List
+
+In some containers or distributions, updating packages may result in an error
+like the following:
+
+```
+Get:1 http://deb.debian.org/debian buster InRelease [122 kB]
+Get:2 http://ftp.debian.org/debian buster-backports InRelease [51.4 kB]             
+Get:3 http://deb.debian.org/debian buster-updates InRelease [56.6 kB]               
+Err:2 http://ftp.debian.org/debian buster-backports InRelease          
+  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 0E98404D386FA1D9 NO_PUBKEY 6ED0E7B82643E131
+Get:4 http://security.debian.org/debian-security buster/updates InRelease [34.8 kB]
+Get:5 http://deb.debian.org/debian buster/main amd64 Packages [7,909 kB]
+Get:6 http://security.debian.org/debian-security buster/updates/main amd64 Packages [578 kB]
+Get:7 http://deb.debian.org/debian buster-updates/main amd64 Packages [8,788 B] 
+Reading package lists... Done                                                       
+W: GPG error: http://ftp.debian.org/debian buster-backports InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 0E98404D386FA1D9 NO_PUBKEY 6ED0E7B82643E131
+E: The repository 'http://ftp.debian.org/debian buster-backports InRelease' is not signed.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+```
+
+The solution is to use the `--allow-insecure-repositories` flag to `apt`:
+
+```
+root@09faa016d105:/# apt-get update --allow-insecure-repositories
+```
+
 ## Further Resources
 At the time of this writing, the simplest guide to Debian packaging can be
 found in the `packaging-tutorial` package in the Debian repositories.
