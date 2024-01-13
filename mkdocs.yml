@@ -3,6 +3,8 @@ site_url: https://twardyece.com/repository/
 site_dir: repository
 theme:
   name: material
+  features:
+    - content.code.copy
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
