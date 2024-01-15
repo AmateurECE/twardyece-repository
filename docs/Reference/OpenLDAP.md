@@ -234,3 +234,11 @@ changetype: modify
 replace: olcLogLevel
 olcLogLevel: stats
 ```
+
+# Connecting to an LDAP Service on Another Host
+
+This is accomplished using the `-h hostname` option:
+
+```
+$ ldapsearch -x -LLL -h ldapi://internal_ldap.dns.podman <...>
+```
