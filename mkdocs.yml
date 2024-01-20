@@ -1,6 +1,6 @@
 site_name: Repository
-site_url: https://twardyece.com/repository/
-site_dir: repository
+site_url: https://docs.ethantwardy.com
+site_dir: build
 theme:
   name: material
   features:

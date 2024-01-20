@@ -7,7 +7,10 @@ pipeline {
         sh '''#!/usr/bin/flake-run
         mkdocs build
         '''
-        sh "cp -a ${WORKSPACE}/repository ${HOME}/sitedata/"
+        sh '''#!/bin/bash
+        mkdir -p ${HOME}/sitedata/docs
+        cp -a ${WORKSPACE}/build/* ${HOME}/sitedata/docs/
+        '''
       }
     }
   }
