@@ -22,7 +22,8 @@ rustup-installed versions of rustc (etc.). To resolve:
 $ export PATH="$HOME/.cargo/bin:$PATH"
 ```
 
-Generate the kernel configuration. This procedure was taken from the [linux-asahi PKGBUILD][1].
+Generate the kernel configuration. This procedure was taken from the
+[linux-asahi PKGBUILD][1].
 
 ```bash-session
 kernel-build$ cat ../PKGBUILDs/linux-asahi/config ../PKGBUILDs/linux-asahi/config.edge > .config
@@ -35,8 +36,8 @@ Build the kernel and modules:
 kernel-build$ make -C /usr/src/linux LLVM=1 O=$PWD -j$(nproc)
 ```
 
-Before installing, it may be necessary to remove old kernels from `/boot` and their modules in `/lib/modules`.
-Next, install the kernel and modules:
+Before installing, it may be necessary to remove old kernels from `/boot` and
+their modules in `/lib/modules`. Next, install the kernel and modules:
 
 ```bash-session
 kernel-build$ sudo make -C /usr/src/linux LLVM=1 O=$PWD install
@@ -60,13 +61,8 @@ kernel-build$ sudo dracut --kver 6.3.0-asahi-6-edge-ARCH
 Finally, update GRUB and its configuration to boot with our new kernel:
 
 ```bash-session
+kernel-build$ sudo grub-install --removable --efi-directory=/boot/EFI --boot-directory=/boot
 kernel-build$ sudo grub-mkconfig -o /boot/grub/grub.cfg
-```
-
-# Running Android Studio under Sway:
-
-```
-_JAVA_AWT_WM_NONREPARENTING=1 STUDIO_JDK=/usr/lib/jvm/java-11-openjdk android-studio
 ```
 
 [1]: https://github.com/AsahiLinux/PKGBUILDs/blob/main/linux-asahi/PKGBUILD
