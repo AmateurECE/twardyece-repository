@@ -164,7 +164,7 @@ License:     GPL-3+
 
 So in this case, this entry can be removed entirely.
 
-# Not Installed Packages
+## Not Installed Packages
 
 ```
 Not installed but in /etc/portage/package.{,accept_}keywords:
@@ -175,7 +175,7 @@ Found 11 matches
 These ones are obvious. The package isn't installed, but we are accepting
 keywords for them.
 
-# Pulled Versions of Installed Packages
+## Pulled Versions of Installed Packages
 
 ```
 Installed packages with a version not in the database (or masked):
@@ -196,7 +196,10 @@ $ eix sdbus-c++
 
 Explicitly `emerge`ing them should get the newest version.
 
+Finally, if a package doesn't list a keyword, [open a bug to request it][5].
+
 [1]: https://www.funtoo.org/Portage_API
 [2]: https://dev.gentoo.org/~zmedico/portage/doc/api/
 [3]: https://zigford.org/downgrade-gentoo-from-testing-to-stable.html
 [4]: https://wiki.gentoo.org/wiki//etc/portage/package.accept_keywords
+[5]: https://wiki.gentoo.org/wiki/Knowledge_Base:Missing_keywords_and_keyword_requests#Fixing_it_for_everybody
