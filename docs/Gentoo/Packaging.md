@@ -33,4 +33,10 @@ package).
 To actually install the package, append `qmerge` to the end of the command, so
 that the package is merged after installation.
 
+To test the build using a specific use flag, set the `USE` environment variable:
+
+```
+sudo USE=introspection ebuild ./wireplumber-0.5.2.ebuild manifest clean install
+```
+
 [1]: https://wiki.gentoo.org/wiki//etc/portage/patches
