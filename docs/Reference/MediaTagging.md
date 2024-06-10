@@ -78,3 +78,19 @@ for f in *.m4a; do
   AtomicParsley "$f" --disk "" --overWrite
 done
 ```
+
+# Splitting Audio Files using CUE Metadata
+
+See [1] for more information. Use `shnsplit` to split audio files based on a
+cue file. Then, use `cuetag` to populate the split files with metadata from the
+cue file. Finally, these files can be sorted using `sortlibrary`. Transcoding
+to FLAC by `shnsplit` requires the `flac` utility to be installed. See the
+`shntool` documentation for more information.
+
+```
+$ shnsplit -o flac -f Naturally.cue Naturally.flac
+$ rm Naturally.flac
+$ cuetag Naturally.cue *.flac
+```
+
+[1]: https://wiki.archlinux.org/title/CUE_Splitting
