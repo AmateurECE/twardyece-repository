@@ -39,4 +39,17 @@ To test the build using a specific use flag, set the `USE` environment variable:
 sudo USE=introspection ebuild ./wireplumber-0.5.2.ebuild manifest clean install
 ```
 
+# Generating Metadata
+
+All packages must include metadata. The schema for `metadata.xml` is described
+[here][2]. Use `metagen` to generate metadata and use `pkgdev` to commit the
+changes.
+
+```
+$ metagen -e ethan.twardy@gmail.com --type person
+$ git add metadata.xml
+$ pkgdev commit
+```
+
 [1]: https://wiki.gentoo.org/wiki//etc/portage/patches
+[2]: https://devmanual.gentoo.org/ebuild-writing/misc-files/metadata/index.html
