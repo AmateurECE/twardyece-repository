@@ -7,7 +7,7 @@ committing. Naturally, Portage has a workflow for this, which is documented
 [here][1]. Generally, it looks like this:
 
 ```bash-session
-checkout$ ln -s $PWD /etc/portage/patches/${CATEGORY}/${PN}
+checkout$ ln -s $PWD /etc/portage/patches/${CATEGORY}
 # Make my changes...
 checkout$ git format-patch -p HEAD^
 checkout$ sudo emerge -av ${CATEGORY}/${PN}
