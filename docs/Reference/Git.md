@@ -4,9 +4,9 @@ title: Git
 
 # Remove some files from all commits
 
-WARNING: This command will rewrite history, and it will automatically push
-updates to the remote. This tool is probably not already installed on your
-system. On Arch Linux, the package is called `git-filter-repo`.
+WARNING: This command will rewrite history. This tool is probably not already
+installed on your system. On Arch Linux, the package is called
+`git-filter-repo`.
 
 ```bash-session
 git filter-repo --invert-paths --path filename
@@ -25,6 +25,23 @@ an upstream branch, this flag takes the branch name as a parameter.
 
 ```bash-session
 $ git rebase -i trunk --root
+```
+
+# Create an Empty Branch (And Push to the Remote)
+
+```
+$ git checkout --orphan <branchName>
+# If there are files in the current repo, they will be added to the index.
+$ git reset HEAD -- .
+# Must create a commit to be able to push the branch
+$ git commit --allow-empty -m "Initial commit on empty branch"
+$ git push -u origin <branchName>
+```
+
+# Checkout Other Branches After `git clone --depth 1`
+
+```
+$ git remote set-branches origin '*'
 ```
 
 # Sort Branches by Most Recently Updated
