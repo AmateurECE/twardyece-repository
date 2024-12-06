@@ -22,6 +22,7 @@ directory, the administrator DN is
 `'cn=admin,dc=edtwardy,dc=hopto,dc=org'`.
 
 # Reconfiguring and Finding North
+
 When `slapd` is installed, especially on Debian, apt may not request
 full configuration from the user, and may incorrectly determine the DNS domain
 name of the system. To reconfigure the package, simply use `dpkg`:
@@ -34,12 +35,6 @@ Next, it can be useful to determine the DN of the server:
 
 ```
 ldapsearch -x -s base -b "" namingContexts
-```
-
-To talk to a `slapd` daemon running on another machine:
-
-```
-ldapsearch -h <hostName> ...
 ```
 
 For a server with the FQDN `edtwardy.hopto.org`, this would produce
@@ -237,8 +232,20 @@ olcLogLevel: stats
 
 # Connecting to an LDAP Service on Another Host
 
-This is accomplished using the `-h hostname` option:
+To talk to a `slapd` daemon running on another machine, use the `-H` flag,
+followed by the URL of the OpenLDAP instance (e.g. `internal_ldap`, a FQDN, or
+an IP address, optionally followed by a port) and one of the following schemes:
 
 ```
-$ ldapsearch -x -LLL -h ldapi://internal_ldap.dns.podman <...>
+# Unencrypted, plaintext LDAP spoken over TCP
+ldapsearch -H ldap://internal_ldap ...
+
+# Unencrypted, plaintext LDAP over Unix domain sockets. -Y EXTERNAL requests to
+# use SASL for authentication, which in this case means the UID of the
+# connecting process (i.e., you probably need to be root).
+ldapsearch -H ldapi:/// -Y EXTERNAL
+
+# Encrypted LDAP over TCP using STARTTLS. SASL in this case uses the client's
+# TLS certificate.
+ldapsearch -H ldaps://internal_ldap -Y EXTERNAL
 ```
