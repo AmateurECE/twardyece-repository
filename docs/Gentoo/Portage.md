@@ -1,3 +1,9 @@
+---
+title: Portage
+---
+
+# Portage
+
 # Using the Portage Python API
 
 The Python API is installed with Portage itself. There is very little
@@ -87,6 +93,8 @@ installed, and two entries in `/etc/portage/package.accept_keywords`:
 It should be obvious from here that the first entry is made redundant by the
 second entry, so the first entry can be removed.
 
+### REDUNDANT_IF_WEAKER
+
 ```
 ... considered as REDUNDANT_IF_WEAKER
 [I] app-misc/brightnessctl [2] (0.5.1@04/26/23): A program to read and control device brightness
@@ -118,6 +126,8 @@ License:     MIT
 
 This entry is now weaker than it needs to be, and can be modified.
 
+### REDUNDANT_IF_STRANGE
+
 ```
 ... considered as REDUNDANT_IF_STRANGE
 [N] app-office/libreoffice (7.6.4.1{gpkg:2}): A full office productivity suite
@@ -127,12 +137,22 @@ This is an odd one. In this case, `package.accept_keywords` contained:
 
 ```
 app-office/libreoffice -~arm64
-
 ```
 
 But I had just changed `/etc/portage/make.conf` to list
 `ACCEPT_KEYWORDS="arm64"`, so this entry serves no purpose and can be
 removed.
+
+In some cases, you might need to add an arch keyword for a different arch if
+`eix-test-obsolete` continues to complain. For example, I recently added this
+line to silence a warning about `conan`. The package listed no keywords for
+`arm64` (my arch), but was stable in `amd64`.
+
+```
+<=dev-util/conan-2.7.1 amd64
+```
+
+### REDUNDANT_IF_NO_CHANGE
 
 ```
 ... considered as REDUNDANT_IF_NO_CHANGE
@@ -166,6 +186,10 @@ So in this case, this entry can be removed entirely.
 
 ## Not Installed Packages
 
+If there are a lot of these, make sure that the database is up to date (run
+`eix update`). In the past, I had forgotten to do this recently, and it took
+the number from 260 down to 43.
+
 ```
 Not installed but in /etc/portage/package.{,accept_}keywords:
 [N] media-sound/id3v2 ((*)0.1.12-r1): Command line editor for id3v2 tags
@@ -194,7 +218,12 @@ $ eix sdbus-c++
      Description:         High-level C++ D-Bus library
 ```
 
-Explicitly `emerge`ing them should get the newest version.
+If the first field is `[U]`, explicitly `emerge`ing the stated version should
+resolve the issue. For example:
+
+```
+[U] dev-python/python-lsp-server (1.11.0@06/14/24 -> 1.12.0^t): Python Language Server for the Language Server Protocol
+```
 
 Finally, if a package doesn't list a keyword, [open a bug to request it][5].
 

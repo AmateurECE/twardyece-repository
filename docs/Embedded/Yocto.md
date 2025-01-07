@@ -98,3 +98,16 @@ ninja -C oe-workdir/recipe-1+git9999 -t compdb
 From within a devshell, the CLANGD_FLAGS environment variable should expand to
 a glob expression that clangd will match compilers against. Clangd will
 automatically get the system include flags from the matching compiler.
+
+# Generating a List of Packages
+
+```
+bitbake -g <image> && cat pn-buildlist | grep -ve "native" | sort | uniq
+```
+
+# Figuring Out Why a Recipe is Built
+
+```
+$ bitbake -g core-image-minimal
+$ oe-depends-dot -k busybox -w ./task-depends.dot
+```

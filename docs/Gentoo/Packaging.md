@@ -1,4 +1,6 @@
-# Gentoo
+---
+title: Packaging
+---
 
 ## Applying Patches to Packages
 
@@ -51,5 +53,11 @@ $ git add metadata.xml
 $ pkgdev commit
 ```
 
+# Installing binary-only `.deb` and `.rpm` packages
+
+Apparently, the [`unpacker.eclass`][3] can be used to extract and install
+binary-only packages that come in the form of `.deb` and `.rpm` archives.
+
 [1]: https://wiki.gentoo.org/wiki//etc/portage/patches
 [2]: https://devmanual.gentoo.org/ebuild-writing/misc-files/metadata/index.html
+[3]: https://devmanual.gentoo.org/eclass-reference/unpacker.eclass/index.html
