@@ -1,19 +1,52 @@
 # Building the `-edge` kernel for Asahi Linux
 
-I build the kernel from the `~/kernel-build` directory, because I have a
-`rustup(1)` override set to use a particular version of rust for the kernel
-build. You can check this using `rustup override list`. First, update `$PATH`
-to use the Rust binaries we've installed with rustup.
-
-```bash-session
-export PATH=$HOME/.cargo/bin:$PATH
-```
-
-Just as a sanity check, verify that rust is available:
+I build the kernel from the `~/kernel-build` directory. Just as a sanity check,
+verify that rust is available:
 
 ```bash-session
 kernel-build$ make -C /usr/src/linux LLVM=1 O=$PWD rustavailable
 ```
+
+## Building with a Rustup toolchain
+
+If it's not, there are a few alternatives. We can use a toolchain installed via
+`rustup` to build the kernel. Install the toolchain using rustup. Recall that
+the kernel needs the rust-src component to build. Set a `rustup` override, and
+update the `$PATH` to point to the right directory:
+
+```
+rustup override set 1.84.0
+export PATH=$HOME/.cargo/bin:$PATH
+```
+
+## Building with the Gentoo toolchain
+
+The recent versions of `sys-kernel/asahi-sources` ebuild depends on a recent
+version of rust, installed with the `rust-src` and `rustfmt` USE flags. Use
+`eix` and `equery uses` to see which versions are available to build. Make sure
+`$PATH` points to the right installation of `cargo`, and that `eselect` is
+using the right version of Rust (the one with the `rust-src` and `rustfmt`
+flags).
+
+```
+[kernel-build]$ which cargo
+/usr/bin/cargo
+[kernel-build]$ equery uses '=dev-lang/rust-1.82.0-r101'
+[ Legend : U - final flag setting for installation]
+[        : I - package is installed with flag     ]
+[ Colors : set, unset                             ]
+ * Found these USE flags for dev-lang/rust-1.82.0-r101:
+ U I
+ + + rust-src                 : Install rust-src, needed by developer tools and for
+                                build-std (cross)
+ + + rustfmt                  : Install rustfmt, Rust code formatter
+[kernel-build]$ eselect rust list
+Available Rust versions:
+  [1]   rust-1.82.0 *
+  [2]   rust-1.83.0
+```
+
+## Building the kernel
 
 Generate the kernel configuration. I've been starting with the old
 configuration, and it's been good enough so far.
