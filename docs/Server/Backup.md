@@ -33,3 +33,16 @@ The repository also contains a script for backing up the container data:
 ```
 [twardyece-services]$ ./backup-data.sh
 ```
+
+# Restoring From a Backup
+
+Assuming the backups are in good condition, restoring from a backup is the
+opposite of sending a backup to the remote server:
+
+```
+[~]$ btrfs send /mnt/Backup/snapshots/2025-02-02/@dataset | \
+  btrfs receive /mnt/Mount
+```
+
+The `@dataset` subvolume will be restored to the state it was in at the time of
+the 2025-02-02 snapshot, even if the source snapshot is an incremental snapshot.
