@@ -162,4 +162,14 @@ To start minicom using this configuration:
 $ minicom qemu
 ```
 
+### Line Wrapping in `-nographic` QEMU Sessions
+
+For some reason, when QEMU is started with the `-nographic` option, it disables
+line wrapping on the terminal with an ANSI escape sequence. We can re-enable
+line wrapping from within an active QEMU session with another ANSI sequence:
+
+```
+echo -e '\e[?7h'
+```
+
 [1]: https://github.com/AmateurECE/pacman
