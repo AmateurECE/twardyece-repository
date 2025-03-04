@@ -27,6 +27,20 @@ The solution is to use the `--allow-insecure-repositories` flag to `apt`:
 root@09faa016d105:/# apt-get update --allow-insecure-repositories
 ```
 
+## Holding or Freezing a Package
+
+To hold a package at a specific version:
+
+```
+echo "<package-name> hold" | sudo dpkg --set-selections
+```
+
+To remove the hold:
+
+```
+echo "<package-name> install" | sudo dpkg --set-selections
+```
+
 ## Further Resources
 At the time of this writing, the simplest guide to Debian packaging can be
 found in the `packaging-tutorial` package in the Debian repositories.
