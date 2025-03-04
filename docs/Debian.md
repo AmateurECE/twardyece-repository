@@ -41,6 +41,12 @@ To remove the hold:
 echo "<package-name> install" | sudo dpkg --set-selections
 ```
 
+Listing held packages:
+
+```
+dpkg --get-selections | grep "\<hold$"
+```
+
 ## Further Resources
 At the time of this writing, the simplest guide to Debian packaging can be
 found in the `packaging-tutorial` package in the Debian repositories.
