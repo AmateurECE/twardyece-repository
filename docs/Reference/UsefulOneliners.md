@@ -29,4 +29,7 @@ convert input.png -channel RGB -negate output.png
 # directory, e.g., extracts the contents of linux-6.4.0/* into the current
 # directory
 tar --strip-components=1 -xvf ../linux-6.4.0.tar.gz
+
+# Apply password-protection to a PDF file
+pdftk source.pdf output destination.pdf user_pw PROMPT
 ```
