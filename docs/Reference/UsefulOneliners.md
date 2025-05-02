@@ -22,6 +22,16 @@ perl -i -pe 'BEGIN{undef $/;} s@mutiline\nregex@@' ./**/*/*.cpp
 app-text/tree package on Gentoo)
 tree some-subdirectory
 
+# Copy an image into a sparse file:
+cp --sparse=always input.img output.img
+
+# Convert an image into a sparse file (in place):
+# On Gentoo, this tool comes from sys-apps/util-linux
+fallocate -v --dig-holes file.img
+
+# Remove the first line from a stream:
+echo -e "hey\nyou" | tail -n +2
+
 # Invert the colors of an image (using ImageMagick)
 convert input.png -channel RGB -negate output.png
 
