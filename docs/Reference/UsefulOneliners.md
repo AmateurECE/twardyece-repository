@@ -42,4 +42,7 @@ tar --strip-components=1 -xvf ../linux-6.4.0.tar.gz
 
 # Apply password-protection to a PDF file
 pdftk source.pdf output destination.pdf user_pw PROMPT
+
+# Install an SSH public key on a remote server:
+ssh-copy-id -i ~/.ssh/id_ed25519.pub <username>@<host>
 ```
