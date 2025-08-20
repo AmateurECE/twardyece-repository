@@ -267,4 +267,10 @@ git rebase --onto main next topic
 After this rebase, don't forget to push using `--force-with-lease`, instead of
 `--force`, since the former is much safer!
 
+# Find out which branch has a tag
+
+```
+git branch --contains tags/<tag>
+```
+
 [1]: https://git-scm.com/docs/git-rebase

@@ -76,3 +76,21 @@ Copy a partition over SSH:
 ssh user@remote "dd if=/dev/sda | gzip -1 -" \
   | dd of=image.img.gz status=progress
 ```
+
+Send a btrfs snapshot over SSH, where the SSH connection is established from
+the receiver to the sender:
+```
+# Start the receiver
+nc -l -p 9999 | btrfs receive /data/
+
+# Send
+ssh -R 9999:localhost:9999 ethantwardy@mail.ethantwardy.com \
+  "btrfs send /data/snapshots/@etc | nc localhost 9999"
+```
+
+Use NTP to set the system clock time. It may take up to a minute for this
+process to execute:
+```
+ntpd -g -q
+hwclock --systohc
+```
