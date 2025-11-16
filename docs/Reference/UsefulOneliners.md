@@ -17,6 +17,21 @@ sed -i $'s/\r$//'
 sed -i $'s/$/\r/'
 ```
 
+Recursively find and replace a string in this subdirectory:
+```sh
+find . -type f -exec sed -i -e 's/apple/orange/g' {} \;
+```
+
+...excluding a directory, e.g. `.git`. The `./` is necessary:
+```
+find . -path ./.git -prune -o -type f -print
+```
+
+...or even multiple directories:
+```
+find . -type f \( -path ./.git -o -path ./debian/tmp \) -prune -print
+```
+
 Enable the double-glob operator in Bash, a.k.a the "globstar" or "**":
 ```
 shopt -s globstar
@@ -80,12 +95,8 @@ ssh user@remote "dd if=/dev/sda | gzip -1 -" \
 Send a btrfs snapshot over SSH, where the SSH connection is established from
 the receiver to the sender:
 ```
-# Start the receiver
-nc -l -p 9999 | btrfs receive /data/
-
-# Send
-ssh -R 9999:localhost:9999 ethantwardy@mail.ethantwardy.com \
-  "btrfs send /data/snapshots/@etc | nc localhost 9999"
+ssh ethantwardy@mail.ethantwardy.com \
+  "btrfs send /data/snapshots/@etc" | btrfs receive ./
 ```
 
 Use NTP to set the system clock time. It may take up to a minute for this

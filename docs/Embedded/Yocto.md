@@ -111,3 +111,21 @@ bitbake -g <image> && cat pn-buildlist | grep -ve "native" | sort | uniq
 $ bitbake -g core-image-minimal
 $ oe-depends-dot -k busybox -w ./task-depends.dot
 ```
+
+# Extracting an initramfs from a kernel image
+
+Given a kernel image in `bzImage` format, the initramfs is stored as a gzipped
+CPIO archive in an ELF section. Extract the kernel ELF image from the bzImage,
+extract the initramfs image, and unarchive its contents:
+
+```
+$ binwalk --extract bzImage-initramfs-gadget.bin
+$ readelf -S _bzImage-initramfs-gadget.bin.extracted/42C4
+    ...
+  [16] .init.data        PROGBITS         ffffffff82cfe000  01efe000
+       0000000000816378  0000000000000000  WA       0     0     8192
+    ...
+$ objcopy -O binary --only-section=.init.data \
+  _bzImage-initramfs-gadget.bin.extracted/42C4 initramfs.cpio.gz
+$ cpio -i -d -H newc --no-absolute-filenames <initramfs.cpio.gz
+```
