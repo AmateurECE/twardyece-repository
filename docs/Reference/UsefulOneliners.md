@@ -99,9 +99,28 @@ ssh ethantwardy@mail.ethantwardy.com \
   "btrfs send /data/snapshots/@etc" | btrfs receive ./
 ```
 
+If a root account is not available on the remote host (i.e. `sudo` is
+required), we have to pipe the stream through an SSH tunnel:
+
+```
+# Start the receiver in one terminal
+user@local$ nc -l -p 9999 | btrfs receive /data/
+
+# Log in and send the snapshot from a different terminal
+user@local$ ssh -R 9999:localhost:9999 ethantwardy@mail.ethantwardy.com
+user@remote$ sudo btrfs subvolume snapshot -r /data/\@etc \
+    /data/snapshots/\@etc
+user@remote$ sudo btrfs send /data/snapshots/\@etc | nc localhost 9999
+```
+
 Use NTP to set the system clock time. It may take up to a minute for this
 process to execute:
 ```
 ntpd -g -q
 hwclock --systohc
+```
+
+Ignore SSH host key checking:
+```
+ssh -o "StrictHostKeyChecking no" user@host
 ```
