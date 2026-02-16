@@ -124,3 +124,8 @@ Ignore SSH host key checking:
 ```
 ssh -o "StrictHostKeyChecking no" user@host
 ```
+
+Find out when the next cron job is scheduled to run:
+```
+cronnext | awk '{print $2}' | xargs -I{} date -d @{}
+```

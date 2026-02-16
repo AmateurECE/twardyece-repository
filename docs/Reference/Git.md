@@ -273,4 +273,22 @@ After this rebase, don't forget to push using `--force-with-lease`, instead of
 git branch --contains tags/<tag>
 ```
 
+# Host a Repository over HTTPS
+
+Create the directory on the HTTPS server. Initialize a bare repository on the
+current machine, and push the refs up to it. Copy this directory to the machine
+where it will be served over HTTPS, and then set it up for git. At this point,
+you can clone it from any machine that can access the HTTP server.
+```
+my-project$ mkdir ../my-project.git
+my-project$ (cd ../my-project.git && git init --bare)
+my-project$ git remote add origin ../my-project.git
+my-project$ rsync -e ssh -a ../my-project.git ethantwardy@ethantwardy.com:/srv/
+my-project$ ssh ethantwardy@ethantwardy.com <<EOF
+> cd /srv/my-project.git
+> git --bare update-server-info
+> mv hooks/post-update.sample hooks/post-update
+> EOF
+```
+
 [1]: https://git-scm.com/docs/git-rebase
