@@ -17,6 +17,7 @@
 * [The Mechanics of Proof][6]
 * [The Hitchhiker's Guide to Logical Verification][7]
 * [Certified Programming with Dependent Types][8]
+* [Neovim Lean Abbreviations][10]
 
 [1]: https://keleshev.com/compiling-to-assembly-from-scratch/05-parser-combinators
 [2]: https://isuckatcs.github.io/how-to-compile-your-language/
@@ -27,3 +28,4 @@
 [7]: https://cs.brown.edu/courses/cs1951x/static_files/main.pdf
 [8]: http://adam.chlipala.net/cpdt/
 [9]: https://thunderseethe.dev/series/making-a-language/
+[10]: https://github.com/Julian/lean.nvim/blob/main/vscode-lean/abbreviations.json
