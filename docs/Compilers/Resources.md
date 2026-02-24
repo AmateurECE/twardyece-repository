@@ -1,3 +1,7 @@
+---
+title: Compiler Resources
+---
+
 # Type Systems
 * [Thunderseethe's Devlog Series on Making a Language][9]
 
