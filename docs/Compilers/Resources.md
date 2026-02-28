@@ -15,9 +15,11 @@ title: Compiler Resources
 * [Compiling to Assembly from Scratch: Chapter 5: Parser Combinators][1]
 
 # Proof Assistants
+* [Loogle][11]
 * [Functional Programming in Lean][3]
 * [Theorem Proving in Lean4][4]
 * [The Lean Language Reference][5]
+* [Debugging Lean Programs][12]
 * [The Mechanics of Proof][6]
 * [The Hitchhiker's Guide to Logical Verification][7]
 * [Certified Programming with Dependent Types][8]
@@ -33,3 +35,5 @@ title: Compiler Resources
 [8]: http://adam.chlipala.net/cpdt/
 [9]: https://thunderseethe.dev/series/making-a-language/
 [10]: https://github.com/Julian/lean.nvim/blob/main/vscode-lean/abbreviations.json
+[11]: https://loogle.lean-lang.org/
+[12]: https://github.com/leanprover/lean4/blob/master/doc/dev/debugging.md
