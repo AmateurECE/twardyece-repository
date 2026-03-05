@@ -154,4 +154,28 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
 ```
 
+# Debugging Interactive/Running Programs with GDB
+
+GDB can attach to a running process given the process PID. In one terminal, I
+can start my program:
+```
+$ ./_build/default/bin/main.exe llir-repl
+ready>
+```
+In this terminal, I can interact with the program. In another terminal, I can
+run GDB:
+```
+gdb -p 6566 ./_build/default/bin/main.exe
+```
+A typical Linux distro will use [YAMA][2], which may cause this permission error:
+```
+Attaching to program: /home/edtwardy/Git/compilers-diary/kaleidoscope-ocaml/_build/default/bin/main.exe, process 6566
+ptrace: Operation not permitted.
+```
+It's possible to disable this (for the current boot) with a file in procfs:
+```
+echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+```
+
 [1]: https://github.com/NixOS/patchelf
+[2]: https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
