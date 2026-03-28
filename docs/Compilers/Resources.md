@@ -9,6 +9,7 @@ title: Compiler Resources
 * [LLVM Language Reference Manual](https://llvm.org/docs/LangRef.html)
 * [LLVM API Reference](https://llvm.org/doxygen/)
 * [Official LLVM Kaleidoscope Tutorial](https://llvm.org/docs/tutorial/)
+* [LLVM's Analysis and Transform Passes (Optimizations)][24]
 * [isuckatcs: How to Compile your Language][2]
 
 # Parsing
@@ -73,3 +74,4 @@ odig doc --lib-dir=$(ocamlfind query llvm)/.. -u
 [21]: https://developer.arm.com/documentation/ddi0403/ee/?lang=en
 [22]: https://libaco.org/docs
 [23]: https://github.com/edubart/minicoro
+[24]: https://llvm.org/docs/Passes.html
