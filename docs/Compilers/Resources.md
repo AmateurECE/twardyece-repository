@@ -7,6 +7,7 @@ title: Compiler Resources
 
 # LLVM
 * [LLVM Language Reference Manual](https://llvm.org/docs/LangRef.html)
+* [Source-level Debugging with LLVM][25]
 * [LLVM API Reference](https://llvm.org/doxygen/)
 * [Official LLVM Kaleidoscope Tutorial](https://llvm.org/docs/tutorial/)
 * [LLVM's Analysis and Transform Passes (Optimizations)][24]
@@ -33,14 +34,26 @@ odig doc --lib-dir=$(ocamlfind query llvm)/.. -u
 ```
 
 # Proof Assistants
+## General
+* [The Mechanics of Proof][6]
+* [The Hitchhiker's Guide to Logical Verification][7]
+
+## Rocq
+* [Rocq Reference Manual](https://rocq-prover.org/doc/v9.0/refman/index.html)
+* [Dune Rocq Documentation](https://dune.readthedocs.io/en/stable/rocq.html)
+* [Rocq Standard Library](https://rocq-prover.org/doc/v9.0/stdlib/index.html)
+* [Rocq Extraction][26]
+!!! note
+    The workflow for building changed significantly in v9.0
+* [Building Rocq Projects][27]
+* [Certified Programming with Dependent Types][8]
+
+## Lean
 * [Loogle][11]
 * [Functional Programming in Lean][3]
 * [Theorem Proving in Lean4][4]
 * [The Lean Language Reference][5]
 * [Debugging Lean Programs][12]
-* [The Mechanics of Proof][6]
-* [The Hitchhiker's Guide to Logical Verification][7]
-* [Certified Programming with Dependent Types][8]
 * [Neovim Lean Abbreviations][10]
 
 # Operating Systems
@@ -75,3 +88,6 @@ odig doc --lib-dir=$(ocamlfind query llvm)/.. -u
 [22]: https://libaco.org/docs
 [23]: https://github.com/edubart/minicoro
 [24]: https://llvm.org/docs/Passes.html
+[25]: https://llvm.org/docs/SourceLevelDebugging.html
+[26]: https://rocq-prover.org/doc/v9.0/refman/addendum/extraction.html
+[27]: https://rocq-prover.org/doc/v9.0/refman/practical-tools/utilities.html

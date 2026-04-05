@@ -12,8 +12,9 @@ theme:
       scheme: slate
 markdown_extensions:
   - pymdownx.highlight
+  - admonition
+  - pymdownx.details
   - pymdownx.superfences
   - pymdownx.snippets:
       base_path: 'sources'
       check_paths: true
-  - markdown.extensions.admonition
