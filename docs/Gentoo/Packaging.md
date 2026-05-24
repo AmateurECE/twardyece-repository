@@ -41,6 +41,15 @@ To test the build using a specific use flag, set the `USE` environment variable:
 sudo USE=introspection ebuild ./wireplumber-0.5.2.ebuild manifest clean install
 ```
 
+# Testing with a Local Clone
+
+We can combine the previous trick with a local repository by using an
+environment variable:
+
+```
+EGIT_OVERRIDE_REPO_AMATEURECE_DOTFILES=/home/edtwardy/Git/dotfiles ebuild ./cobblede-9999.ebuild manifest clean install
+```
+
 # Generating Metadata
 
 All packages must include metadata. The schema for `metadata.xml` is described
